@@ -219,7 +219,7 @@ local io = {}
 
 local stdout,stdin,stderr -- used here but cannot be defined yet
 
-function io.open(data, readcallback, writecallback)
+function io.open(data, mode, readcallback, writecallback) -- mode is included for compatibility
 	return setmetatable(
 		{
 			s = tostring((data)), -- wrapped in parentheses to convert void to nil
@@ -279,15 +279,15 @@ end
 
 ----
 
-stdout = io.open("", nil, function(...)
+stdout = io.open("", nil, nil, function(...)
 	print(table.concat({...})) -- can't do anything about newlines
 end)
 
-stdin = io.open("", function(...)
+stdin = io.open("", nil, function(...)
 	return ...
 end)
 
-stderr = io.open("", nil, function(...)
+stderr = io.open("", nil, nil, function(...)
 	print(table.concat({...}))
 end)
 
